@@ -1,0 +1,21 @@
+/* Analytics (extracted from dashboard.css) */
+.metric-card {
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.metric-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+.metric-value { font-size: 32px; font-weight: 800; color: var(--accent); font-family: "Space Mono", monospace; }
+.metric-label { font-size: 14px; color: var(--muted); margin-top: 8px; }
+.metric-change { font-size: 12px; margin-top: 4px; }
+.activity-list { max-height: 300px; overflow-y: auto; }
+.activity-entry { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.activity-entry:last-child { border-bottom: none; }
+.activity-info { display: flex; flex-direction: column; gap: 4px; }
+.activity-info strong { font-size: 14px; }
+.activity-info span { font-size: 12px; color: var(--muted); }
+.activity-time { font-size: 12px; color: var(--muted); }
+

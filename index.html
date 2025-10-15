@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CivicForge — Real-time City News + AI Studio</title>
+  <meta name="description" content="A free website for everyone: hourly real news curation from cities worldwide, AI-powered content tools, internal wallet, and optional MetaMask login." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./components.css" />
+  <link rel="stylesheet" href="./animations.css" />
+  <link rel="stylesheet" href="./responsive.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "nanoid": "https://cdn.jsdelivr.net/npm/nanoid@5.0.7/+esm",
+      "dayjs": "https://cdn.jsdelivr.net/npm/dayjs@1.11.11/+esm"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./">CivicForge</a>
+      <nav class="nav">
+        <button id="btn-open-login" class="btn ghost">Log in</button>
+        <a class="btn primary" href="./dashboard.html" id="btn-go-dashboard">Open Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <h1>Hourly reality, crafted with AI.</h1>
+          <p class="lede">
+            CivicForge turns live news from cities and countries worldwide into clear, verified briefs—every hour.
+            Build products, write posts, run SEO checks, and brainstorm real-life solutions in your dashboard.
+          </p>
+          <div class="cta-row">
+            <a class="btn primary" href="./dashboard.html">Start Creating</a>
+            <button class="btn ghost" id="btn-open-settings">API Key & Settings</button>
+          </div>
+          <p class="muted note">Free to use. Optional MetaMask account linking. Clean design, no gimmicks.</p>
+          
+          <!-- New live stats -->
+          <div class="stats-row">
+            <div class="stat-item">
+              <div class="stat-number" id="total-briefs">0</div>
+              <div class="stat-label">Total Briefs</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" id="active-users">0</div>
+              <div class="stat-label">Active Users</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" id="content-generated">0</div>
+              <div class="stat-label">Content Generated</div>
+            </div>
+          </div>
+          
+          <!-- Enhanced live preview -->
+          <div class="live-preview">
+            <div class="live-indicator">
+              <div class="pulse-dot"></div>
+              <span>Live Updates</span>
+            </div>
+            <div class="preview-cards">
+              <div class="preview-card">
+                <div class="preview-icon">🌍</div>
+                <div class="preview-text">
+                  <div class="preview-title">Global Coverage</div>
+                  <div class="preview-desc">200+ cities tracked</div>
+                </div>
+              </div>
+              <div class="preview-card">
+                <div class="preview-icon">🤖</div>
+                <div class="preview-text">
+                  <div class="preview-title">AI-Powered</div>
+                  <div class="preview-desc">Content & insights</div>
+                </div>
+              </div>
+              <div class="preview-card">
+                <div class="preview-icon">💎</div>
+                <div class="preview-text">
+                  <div class="preview-title">Earn Rewards</div>
+                  <div class="preview-desc">CFG tokens & staking</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h3>Latest Hourly Brief</h3>
+          <div id="latest-brief" class="brief-card">
+            <div class="skeleton"></div>
+            <div class="skeleton"></div>
+            <div class="skeleton short"></div>
+          </div>
+          <div class="hero-actions">
+            <button id="btn-refresh-brief" class="btn small">Refresh now</button>
+            <span id="next-run" class="muted"></span>
+          </div>
+        </div>
+        
+        <!-- Add live activity stream -->
+        <div class="live-activity">
+          <h4>Live Activity</h4>
+          <div id="live-activity-stream" class="activity-stream">
+            <div class="activity-item pulse">
+              <span class="activity-icon">📝</span>
+              <span class="activity-text">Anonymous created content</span>
+              <span class="activity-time">2m ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="feed">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>City & Country Snapshots</h2>
+          <p class="muted">Neutral, sourced summaries. Verified links. Updated hourly.</p>
+          
+          <!-- New filter controls -->
+          <div class="feed-controls">
+            <div class="row">
+              <select id="region-filter" class="input">
+                <option value="">All Regions</option>
+                <option value="north-america">North America</option>
+                <option value="europe">Europe</option>
+                <option value="asia">Asia</option>
+                <option value="africa">Africa</option>
+                <option value="south-america">South America</option>
+                <option value="oceania">Oceania</option>
+              </select>
+              <select id="sentiment-filter" class="input">
+                <option value="">All Sentiment</option>
+                <option value="positive">Positive</option>
+                <option value="neutral">Neutral</option>
+                <option value="negative">Negative</option>
+              </select>
+              <input id="search-news" class="input" placeholder="Search news..." />
+            </div>
+          </div>
+        </div>
+        <div id="feed" class="grid-feed">
+          <!-- Cards inserted by news.js -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <div class="brand">CivicForge</div>
+        <p class="muted">Open tools to think, build, and act on real information.</p>
+      </div>
+      <div>
+        <h4>Links</h4>
+        <ul class="link-list">
+          <li><a href="./dashboard.html">Dashboard</a></li>
+          <li><button class="linklike" id="btn-open-settings-footer">API Key</button></li>
+          <li><a href="#" id="legal-note">Legal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Status</h4>
+        <p class="muted" id="status-line">Idle</p>
+      </div>
+    </div>
+    <!-- Copyleft line -->
+    <div class="wrap">
+      <p class="muted tiny center">ↄ Copyleft 2025 Helder Da Silveira Ventura</p>
+    </div>
+  </footer>
+
+  <!-- Auth Modal -->
+  <dialog id="auth-modal" class="modal">
+    <form method="dialog" class="card">
+      <div class="modal-head">
+        <h3>Log in or Sign up</h3>
+        <button class="icon-btn" value="cancel" aria-label="Close">✕</button>
+      </div>
+      <label class="field">
+        <span>Username</span>
+        <input id="auth-username" type="text" required placeholder="yourname" autocomplete="username">
+      </label>
+      <label class="field">
+        <span>Password</span>
+        <input id="auth-password" type="password" required placeholder="••••••••" autocomplete="current-password">
+      </label>
+      <div class="row">
+        <button id="btn-login" class="btn primary" type="button">Log in</button>
+        <button id="btn-signup" class="btn" type="button">Sign up</button>
+      </div>
+      <div class="hr"><span>or</span></div>
+      <button id="btn-metamask-auth" class="btn ghost" type="button">Connect MetaMask</button>
+      <p class="muted tiny">We link your address by signature. No funds moved.</p>
+    </form>
+  </dialog>
+
+  <!-- Settings Modal -->
+  <dialog id="settings-modal" class="modal">
+    <form method="dialog" class="card">
+      <div class="modal-head">
+        <h3>Settings</h3>
+        <button class="icon-btn" value="cancel" aria-label="Close">✕</button>
+      </div>
+      <label class="field">
+        <span>Google AI Studio API Key</span>
+        <input id="input-api-key" type="password" placeholder="Paste your key" autocomplete="new-password" />
+        <p class="muted tiny">Stored locally on your device only. Provided by you.</p>
+      </label>
+      <label class="field">
+        <span>API Provider</span>
+        <select id="index-api-provider" class="input">
+          <option value="rss_only">RSS-only (most accurate, no AI)</option>
+          <option value="gemini_ai">Google AI Studio (Gemini)</option>
+          <option value="websim_free">Websim Free (fallback, no key)</option>
+          <option value="world_bundle">World Bundle (Reuters/AP/BBC)</option>
+          <option value="tech_bundle">Tech Bundle (TC/Wired/HN)</option>
+          <option value="guardian_api">The Guardian (RSS)</option>
+          <option value="nyt_api">NYTimes (RSS)</option>
+          <option value="reddit_rss">Reddit WorldNews (RSS)</option>
+          <option value="hn_rss">Hacker News (RSS)</option>
+        </select>
+      </label>
+      <div class="row">
+        <button id="btn-save-settings" class="btn primary" type="button">Save</button>
+        <button class="btn" value="cancel">Close</button>
+      </div>
+      <div class="row">
+        <button id="btn-save-provider-index" class="btn">Save Provider</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Enhanced floating action button for quick access -->
+  <div class="fab-container">
+    <button id="fab-main" class="fab">
+      <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+    </button>
+    <div class="fab-menu" id="fab-menu">
+      <button class="fab-item" data-action="create">
+        <span class="fab-icon">✨</span>
+        <span class="fab-label">Create Content</span>
+      </button>
+      <button class="fab-item" data-action="news">
+        <span class="fab-icon">📰</span>
+        <span class="fab-label">Latest News</span>
+      </button>
+      <button class="fab-item" data-action="wallet">
+        <span class="fab-icon">💰</span>
+        <span class="fab-label">Wallet</span>
+      </button>
+      <button class="fab-item" data-action="ai">
+        <span class="fab-icon">🤖</span>
+        <span class="fab-label">AI Assistant</span>
+      </button>
+      <button class="fab-item" data-action="nft">
+        <span class="fab-icon">🎨</span>
+        <span class="fab-label">NFT Studio</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Enhanced notification system -->
+  <div id="notification-container" class="notification-container"></div>
+
+  <!-- Real-time status indicator -->
+  <div id="status-indicator" class="status-indicator">
+    <div class="status-dot"></div>
+    <span>Online</span>
+  </div>
+
+  <script src="./ai.js" type="module"></script>
+  <script src="./news.js" type="module"></script>
+  <script src="./app.js" type="module"></script>
+</body>
+</html>

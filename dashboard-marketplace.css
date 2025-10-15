@@ -1,0 +1,27 @@
+/* Marketplace (extracted from dashboard.css) */
+.marketplace-items {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.marketplace-item {
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s ease;
+}
+.marketplace-item:hover { transform: translateY(-2px); border-color: var(--accent); }
+.item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.item-header h4 { margin: 0; font-size: 16px; }
+.item-price { font-weight: 600; color: var(--accent); }
+.item-meta { display: flex; gap: 12px; margin-bottom: 12px; font-size: 12px; }
+.category-badge { background: var(--accent); color: #000; padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: 600; }
+.item-description { margin: 12px 0; font-size: 14px; line-height: 1.4; color: var(--muted); }
+.item-tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0; }
+.tag { background: var(--card-bg); border: 1px solid var(--line); padding: 2px 8px; border-radius: 8px; font-size: 10px; color: var(--muted); }
+.item-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); }
+.item-stats { display: flex; gap: 16px; font-size: 12px; color: var(--muted); }
+
